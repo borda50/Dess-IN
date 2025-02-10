@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dess'IN la ville</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .hidden { display: none; }
+        button {
+            font-size: 20px;
+            padding: 15px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        #start { background-color: #007bff; color: white; }
+        .difficulty[data-level="simple"] { background-color: #4CAF50; color: white; }
+        .difficulty[data-level="moyen"] { background-color: #FFC107; color: white; }
+        .difficulty[data-level="difficile"] { background-color: #DC3545; color: white; }
+        #success { background-color: #4CAF50; color: white; }
+        #pass { background-color: #DC3545; color: white; }
+        #restart, #continue { background-color: #007bff; color: white; }
+        #word { font-size: 32px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <button id="start">▶️ LANCER</button>
+    <div id="game" class="hidden">
+        <h2 id="timer">100s</h2>
+        <h3 id="counter">0 réussis / 0 tentés</h3>
+        <div id="difficulty-choices">
+            <button class="difficulty" data-level="simple">😀 Simple</button>
+            <button class="difficulty" data-level="moyen">😐 Moyen</button>
+            <button class="difficulty" data-level="difficile">😈 Difficile</button>
+        </div>
+        <h2 id="word" class="hidden"></h2>
+        <div id="action-buttons" class="hidden">
+            <button id="success">✅ RÉUSSI</button>
+            <button id="pass">🔄 PASSER (-15sec)</button>
+        </div>
+    </div>
+    <h2 id="result" class="hidden"></h2>
+    <button id="restart" class="hidden">🔁 RECOMMENCER</button>
+    <button id="continue" class="hidden">➡ Prochain joueur</button>
+    <script>
+        const words = {
+            simple: ["Soleil", "Lune", "Marguerite", "Etoile", "Main", "Cerise", "Nuage", "Chapeau", "Fromage", "Bouteille",
+"Escargot", "Anneau", "Ballon", "Cercle", "Araignee", "Glace", "Chateau", "Papillon", "Carré", "Boite",
+"Maison", "Pizza", "Chaise", "Tour eiffel", "Igloo", "Poubelle", "Noel", "Porte", "Avion", "Cerf-volant",
+"Couteau", "Echelle", "Toit", "Horloge", "Coeur", "Pluie", "Arbre", "Table", "Smiley", "Tapis",
+"Loupe", "Triangle", "Carre", "Herbe", "Montagne", "Flèche", "Lac", "Fleur", "Stylo", "Crayon",
+"Carrotte", "Tasse", "Escalier", "Dent", "Poisson", "Toboggan", "Télécommande", "Os", "Thé", "Casserole",
+"Usine", "Bureau", "Ovale", "Parallèle", "Angle droit", "Route", "Reveil", "Parapluie", "Marteau", "Moustache",
+"Pourcentage", "Lettre", "Chiffre", "Explosion", "Bonhomme bâton"],
+            moyen: ["Souris", "Cravate", "Sabre", "Pirate", "Bague", "Appareil photo", "Bouche", "Television", "Voiture", "Sac",
+"Chemin", "Poire", "Assiette", "Vis", "Lit", "Ordinateur", "Feuille", "Livre", "Éclair", "Clé",
+"Goutte", "Banane", "Prise electrique", "Cactus", "Tournevis", "Pelle", "Scie", "Couronne", "Épée", "Botte",
+"Dés", "Vague", "Boomerang", "Arc", "Podium", "Champignon", "Big ben", "Canape", "Drapeau", "Pont",
+"Feu d'artifice", "Balai", "Yoyo", "Chateau de sable", "Lunette", "Bible", "Lampe", "Boite au lettres", "Nuit", "Soucoupe volante",
+"Canne a pêche", "Oreille", "Nez", "Verre", "Chaussette", "Casquette", "Crosses Hockey", "Allumette", "Écrou", "Tracteur",
+"Oeuf", "Poignée", "Canette", "Note de musique", "Medicament", "Roue", "Bras", "Aubergine", "Pied", "Fourchette",
+"Cuillère", "Crevette", "Lèvre", "Baton", "Peigne", "Cigarette", "Pile", "Ciel", "Sablier", "Cicatrice",
+"Parking", "Mer", "Ballon foot", "Ballon rugby", "Volant badminton", "Règle", "Niveau", "Fouet", "Filet", "Voile",
+"Télévision"],
+            difficile: ["Dinosaure", "Limousine", "Robe de mariee", "Ciseaux", "Chat", "Chien", "Oiseau", "Bonbon", "Gateau", "Coffre fort",
+"Bateau", "Train", "Feu", "Bouclier", "Camion", "Montgolfière", "Fusee", "Clavier", "Ascenseur", "Gratte-ciel",
+"Peinture", "Jungle", "Cadenas", "Île", "Phare", "Temple", "Arc-en-ciel", "eglise", "Dragon", "Dauphin",
+"Tente", "Sac a dos", "Toupie", "Lapin", "Tortue", "Raquette", "Cheval", "Biberon", "Moulin", "Comète",
+"Sous-marin", "Helicopthère", "Centrale nucleaire", "Plage", "eolienne", "Volcan", "Bonhomme de neige", "Poule", "Scorpion", "Mouche",
+"Girafe", "Arrosoir", "Musique", "Saladier", "Moustique", "Fourmi", "Hérisson", "Vélo", "Statue de la Libertée", "Serrure",
+"Flamant Rose", "Astronaute", "Coq", "Billet", "Mouton", "Méduse", "Éléphant", "Météorite", "Sapin", "Robot",
+"Tour de Pise", "Pleure", "Poumon", "Menottes", "Toilette", "Doigt", "Guitare", "Bowling", "Cadeau", "Chariot",
+"Pain", "Cible", "Fraise", "Map monde", "Ananas", "Brouette", "Thermostat", "Cafard", "Xylophone", "Clown",
+"Crapaud", "4 saisons"]
+        };
+        
+        let timer;
+        let timeLeft = 100;
+        let successCount = 0;
+        let attempts = 0;
+
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    document.getElementById("timer").textContent = timeLeft + "s";
+                } else {
+                    clearInterval(timer);
+                    endGame("PERDU !");
+                }
+            }, 1000);
+        }
+
+        function endGame(message) {
+            document.getElementById("game").classList.add("hidden");
+            document.getElementById("result").textContent = `${message} (${successCount} réussis / ${attempts} tentés)`;
+            document.getElementById("result").classList.remove("hidden");
+            document.getElementById("restart").classList.remove("hidden");
+        }
+
+        document.getElementById("start").addEventListener("click", function() {
+            document.getElementById("start").classList.add("hidden");
+            document.getElementById("game").classList.remove("hidden");
+            startTimer();
+        });
+        
+        document.querySelectorAll(".difficulty").forEach(button => {
+            button.addEventListener("click", function() {
+                let level = this.getAttribute("data-level");
+                let randomWord = words[level][Math.floor(Math.random() * words[level].length)];
+                let timeBonus = level === "simple" ? 30 : level === "moyen" ? 40 : 60;
+                document.getElementById("word").textContent = randomWord;
+                document.getElementById("success").textContent = `✅ RÉUSSI (+${timeBonus}sec)`;
+                document.getElementById("word").classList.remove("hidden");
+                document.getElementById("action-buttons").classList.remove("hidden");
+                document.getElementById("difficulty-choices").classList.add("hidden");
+                document.getElementById("word").setAttribute("data-level", level);
+            });
+        });
+        
+        document.getElementById("success").addEventListener("click", function() {
+            let level = document.getElementById("word").getAttribute("data-level");
+            let timeBonus = level === "simple" ? 30 : level === "moyen" ? 40 : 60;
+            timeLeft += timeBonus;
+            successCount++;
+            attempts++;
+            document.getElementById("timer").textContent = timeLeft + "s";
+            checkEndGame();
+        });
+        
+        document.getElementById("pass").addEventListener("click", function() {
+            timeLeft -= 15;
+            attempts++;
+            document.getElementById("timer").textContent = timeLeft + "s";
+            checkEndGame();
+        });
+        
+        function checkEndGame() {
+            document.getElementById("counter").textContent = `${successCount} réussis / ${attempts} tentés`;
+            if (successCount >= 10) {
+                clearInterval(timer);
+                endGame("GAGNÉ !");
+            } else if (attempts % 3 === 0) {
+                clearInterval(timer);
+                document.getElementById("continue").classList.remove("hidden");
+                document.getElementById("action-buttons").classList.add("hidden");
+            } else {
+                resetForNextRound();
+            }
+        }
+
+        function resetForNextRound() {
+            document.getElementById("word").classList.add("hidden");
+            document.getElementById("action-buttons").classList.add("hidden");
+            document.getElementById("difficulty-choices").classList.remove("hidden");
+        }
+        
+        document.getElementById("continue").addEventListener("click", function() {
+            document.getElementById("continue").classList.add("hidden");
+            resetForNextRound();
+            startTimer();
+        });
+        
+        document.getElementById("restart").addEventListener("click", function() {
+            location.reload();
+        });
+    </script>
+</body>
+</html>
