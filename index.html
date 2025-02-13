@@ -81,7 +81,7 @@
 "Casque", "Boite aux lettres", "Niveau", "Coquillage", "Chateau de sable", "Canard", "Pétale", "Porte-clé", "Barbecue", "Faux"]
         };
         
-        let timerInterval = null; // Stockage unique du setInterval
+        let timerInterval = null;
         let timeLeft = 100;
         let successCount = 0;
         let attempts = 0;
@@ -98,7 +98,7 @@
                     }
                 } else {
                     clearInterval(timerInterval);
-                    document.getElementById("lose").play(); // Son de défaite
+                    document.getElementById("lose").play();
                     endGame("PERDU !");
                 }
             }, 1000);
@@ -165,7 +165,6 @@
             
         if (successCount >= 10) {
             clearInterval(timerInterval);
-            document.getElementById("difficulty-choices").classList.add("hidden");
             endGame("GAGNÉ !");
         }
             
@@ -182,7 +181,6 @@
         function resetForNextRound() {
             document.getElementById("word").classList.add("hidden");
             document.getElementById("action-buttons").classList.add("hidden");
-            document.getElementById("difficulty-choices").classList.remove("hidden");
         }
         
         document.getElementById("continue").addEventListener("click", function() {
