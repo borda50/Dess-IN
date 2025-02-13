@@ -89,6 +89,7 @@ function startTimer() {
     if (timerInterval !== null) {
         clearInterval(timerInterval);
     }
+    
     timerInterval = setInterval(() => {
         if (timeLeft > 0) {
             if ([10, 5, 3, 2, 1].includes(timeLeft)) {
