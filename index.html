@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dess'IN la ville</title>
-    <audio id="beep" src="bip.mp3"></audio>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -88,9 +87,6 @@
             clearInterval(timer);
             timer = setInterval(() => {
                 if (timeLeft > 0) {
-                    if (timeLeft <= 12) {
-                        document.getElementById("beep").play();
-                    }
                     timeLeft--;
                     document.getElementById("timer").textContent = timeLeft + "s";
                 } else {
