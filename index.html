@@ -35,6 +35,7 @@
     </style>
 </head>
 <body>
+    <audio id="beep" src="bip.mp3"></audio>
     <audio id="endSound" src="fin.mp3"></audio>
     <button id="start">▶️ LANCER</button>
     <div id="game" class="hidden">
@@ -90,6 +91,9 @@
                 if (timeLeft > 0) {
                     timeLeft--;
                     document.getElementById("timer").textContent = timeLeft + "s";
+
+                    if (timeLeft > 10) {
+                        document.getElementById("beep").play();
                 } else {
                     clearInterval(timer);
                     endGame("PERDU !");
