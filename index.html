@@ -155,9 +155,11 @@
         
         function checkEndGame() {
             document.getElementById("counter").textContent = `${successCount} réussis / ${attempts} tentés`;
+            
             if (successCount >= 10) {
                 clearInterval(timer);
                 document.getElementById("message").textContent = "GAGNÉ !";
+                document.getElementById("action-buttons").classList.add("hidden");
             } else if (attempts % 3 === 0) {
                 clearInterval(timer);
                 document.getElementById("word").classList.add("hidden");
