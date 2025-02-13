@@ -87,15 +87,15 @@
 
         function startTimer() {
             clearInterval(timer);
-            timer = setInterval(() => {
+            timerInterval = setInterval(() => {
                 if (timeLeft > 0) {
                     if ([10, 5, 3, 2, 1].includes(timeLeft)) {
-                        document.getElementById("beep").play();
+                        document.getElementById("beep").play().catch(e => console.log("Audio bloqué :", e));
                     }
                     timeLeft--;
                     document.getElementById("timer").textContent = timeLeft + "s";
                 } else {
-                    clearInterval(timer);
+                    clearInterval(timerInterval);
                     document.getElementById("endSound").play(); // Son final à 0s
                     endGame("PERDU !");
                 }
