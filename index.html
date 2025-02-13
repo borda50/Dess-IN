@@ -39,7 +39,7 @@
     <audio id="endSound" src="fin.mp3"></audio>
     <button id="start">▶️ LANCER</button>
     <div id="game" class="hidden">
-        <h2 id="timer">99s</h2>
+        <h2 id="timer">100s</h2>
         <h3 id="counter">0 réussis / 0 tentés</h3>
         <div id="difficulty-choices">
             <button class="difficulty" data-level="simple">😀 Simple</button>
@@ -160,7 +160,9 @@
                 clearInterval(timer);
                 document.getElementById("message").textContent = "GAGNÉ !";
                 document.getElementById("action-buttons").classList.add("hidden");
-            } else if (attempts % 3 === 0) {
+            }
+            
+            if (attempts % 3 === 0) {
                 clearInterval(timer);
                 document.getElementById("word").classList.add("hidden");
                 document.getElementById("continue").classList.remove("hidden");
