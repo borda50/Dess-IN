@@ -92,7 +92,7 @@
                     timeLeft--;
                     document.getElementById("timer").textContent = timeLeft + "s";
 
-                    if (timeLeft < 10) {
+                    if (timeLeft < 11) {
                         document.getElementById("beep").play();
                     }
                 } else {
@@ -157,7 +157,7 @@
             document.getElementById("counter").textContent = `${successCount} réussis / ${attempts} tentés`;
             if (successCount >= 10) {
                 clearInterval(timer);
-                endGame("GAGNÉ !");
+                document.getElementById("message").textContent = "GAGNÉ !";
             } else if (attempts % 3 === 0) {
                 clearInterval(timer);
                 document.getElementById("word").classList.add("hidden");
