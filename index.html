@@ -40,7 +40,7 @@
     <audio id="win" src="win.mp3"></audio> 
     <button id="start">▶️ LANCER</button>
     <div id="game" class="hidden">
-        <h2 id="timer">90s</h2>
+        <h2 id="timer">100s</h2>
         <h3 id="counter">0 réussis / 0 tentés</h3>
         <div id="difficulty-choices">
             <button class="difficulty" data-level="simple">😀 Simple</button>
@@ -161,8 +161,19 @@
         if (successCount >= 10) {
             clearInterval(timerInterval);
             endGame("GAGNÉ !");
-            document.getElementById("win").play();
         }
+            
+        function winGame() {
+            console.log("winGame() appelé !");
+            clearInterval(timerInterval);
+
+            let winSound = document.getElementById("win");
+            winSound.muted = false;  // Désactive un éventuel mute
+            winSound.play().catch(e => console.log("Erreur audio :", e)); // Debug
+
+            endGame("GAGNÉ !");
+        }
+
             
             if (attempts % 3 === 0) {
                 clearInterval(timerInterval);
