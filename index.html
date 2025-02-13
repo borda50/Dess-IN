@@ -54,7 +54,7 @@
     <button id="restart" class="hidden">🔁 RECOMMENCER</button>
     <button id="continue" class="hidden">➡ Prochain joueur</button>
     <script>
-        const words = {
+        let availableWords = {
             simple: ["Soleil", "Lune", "Marguerite", "Etoile", "Main", "Cerise", "Nuage", "Chapeau", "Fromage", "Bouteille", "Escargot", "Ballon", "Cercle", "Araignee",
 "Glace", "Chateau", "Papillon", "Carré", "Boite", "Maison", "Pizza", "Chaise", "Tour eiffel", "Igloo", "Poubelle", "Noel", "Porte", "Avion", "Cerf-volant",
 "Couteau", "Echelle", "Toit", "Horloge", "Coeur", "Pluie", "Arbre", "Table", "Smiley", "Tapis", "Loupe", "Triangle", "Carre", "Herbe", "Montagne",
@@ -112,14 +112,19 @@
         document.querySelectorAll(".difficulty").forEach(button => {
             button.addEventListener("click", function() {
                 let level = this.getAttribute("data-level");
-                let randomWord = words[level][Math.floor(Math.random() * words[level].length)];
-                let timeBonus = level === "simple" ? 30 : level === "moyen" ? 40 : 60;
-                document.getElementById("word").textContent = randomWord;
-                document.getElementById("success").textContent = `✅ RÉUSSI (+${timeBonus}sec)`;
-                document.getElementById("word").classList.remove("hidden");
-                document.getElementById("action-buttons").classList.remove("hidden");
-                document.getElementById("difficulty-choices").classList.add("hidden");
-                document.getElementById("word").setAttribute("data-level", level);
+ 		if (availableWords[level].length === 0) {
+           	    availableWords[level] = [...words[level]];
+        	}
+        	let randomIndex = Math.floor(Math.random() * availableWords[level].length);
+        	let randomWord = availableWords[level].splice(randomIndex, 1)[0]; // Retire le mot
+        	let timeBonus = level === "simple" ? 30 : level === "moyen" ? 40 : 60;
+        	document.getElementById("word").textContent = randomWord;
+        	document.getElementById("success").textContent = `✅ RÉUSSI (+${timeBonus}sec)`;
+        	document.getElementById("word").classList.remove("hidden");
+        	document.getElementById("action-buttons").classList.remove("hidden");
+        	document.getElementById("difficulty-choices").classList.add("hidden");
+        	document.getElementById("word").setAttribute("data-level", level);
+
             });
         });
         
