@@ -35,8 +35,6 @@
     </style>
 </head>
 <body>
-    <audio id="beep" src="bip.mp3"></audio>
-    <audio id="endSound" src="fin.mp3"></audio>
     <button id="start">▶️ LANCER</button>
     <div id="game" class="hidden">
         <h2 id="timer">100s</h2>
@@ -104,7 +102,6 @@
             document.getElementById("result").textContent = `${message} (${successCount} réussis / ${attempts} tentés)`;
             document.getElementById("result").classList.remove("hidden");
             document.getElementById("restart").classList.remove("hidden");
-            document.getElementById("beep").play();
         }
 
         document.getElementById("start").addEventListener("click", function() {
