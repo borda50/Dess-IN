@@ -104,7 +104,7 @@
             document.getElementById("result").textContent = `${message} (${successCount} réussis / ${attempts} tentés)`;
             document.getElementById("result").classList.remove("hidden");
             document.getElementById("restart").classList.remove("hidden");
-            document.getElementById("endSound").play();
+            document.getElementById("beep").play();
         }
 
         document.getElementById("start").addEventListener("click", function() {
