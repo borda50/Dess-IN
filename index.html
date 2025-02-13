@@ -40,7 +40,7 @@
     <audio id="win" src="win.mp3"></audio> 
     <button id="start">▶️ LANCER</button>
     <div id="game" class="hidden">
-        <h2 id="timer">100s</h2>
+        <h2 id="timer">50s</h2>
         <h3 id="counter">0 réussis / 0 tentés</h3>
         <div id="difficulty-choices">
             <button class="difficulty" data-level="simple">😀 Simple</button>
@@ -106,7 +106,7 @@
 
 
         function endGame(message) {
-            document.getElementById("difficulty-choices").classList.add("hidden");
+            document.getElementById("game").classList.add("hidden");
             document.getElementById("difficulty-choices").classList.add("hidden");
             document.getElementById("word").classList.add("hidden");
             document.getElementById("action-buttons").classList.add("hidden");
