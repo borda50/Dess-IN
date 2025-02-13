@@ -86,43 +86,17 @@
         let attempts = 0;
 
         function startTimer() {
-            // ⚠️ Stoppe complètement tout timer en cours
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-
-            // ✅ Réinitialisation du timer
-            timeLeft = 100;
-            document.getElementById("timer").textContent = timeLeft + "s";
-
-            timerInterval = setInterval(() => {
+            clearInterval(timer);
+            timer = setInterval(() => {
                 if (timeLeft > 0) {
-                    if ([10, 5, 3, 2, 1].includes(timeLeft)) {
-                        document.getElementById("beep").play().catch(e => console.log("Audio bloqué :", e));
-                    }
                     timeLeft--;
                     document.getElementById("timer").textContent = timeLeft + "s";
                 } else {
-                    clearInterval(timerInterval);
-                    timerInterval = null; // 🛑 Libérer l'intervalle
-                    document.getElementById("timer").textContent = "0s";
-                    document.getElementById("endSound").play();
+                    clearInterval(timer);
                     endGame("PERDU !");
                 }
-              }, 1000);
-}
-
-// 🆕 Fonction pour réinitialiser tout proprement quand on change de joueur
-function resetGame() {
-    clearInterval(timerInterval); // Stopper tout intervalle en cours
-    timerInterval = null;
-    timeLeft = 100;
-    document.getElementById("timer").textContent = "100s";
-}
-
-// 🚀 Bouton "Prochain joueur" appelle resetGame() pour éviter l'accélération
-document.getElementById("continue").addEventListener("click", resetGame);
+            }, 1000);
+        }
 
 
         function endGame(message) {
