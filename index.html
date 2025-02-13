@@ -85,22 +85,29 @@
         let successCount = 0;
         let attempts = 0;
 
-        function startTimer() {
-            clearInterval(timer);
-            timerInterval = setInterval(() => {
-                if (timeLeft > 0) {
-                    if ([10, 5, 3, 2, 1].includes(timeLeft)) {
-                        document.getElementById("beep").play().catch(e => console.log("Audio bloqué :", e));
-                    }
-                    timeLeft--;
-                    document.getElementById("timer").textContent = timeLeft + "s";
-                } else {
-                    clearInterval(timerInterval);
-                    document.getElementById("endSound").play(); // Son final à 0s
-                    endGame("PERDU !");
-                }
-            }, 1000);
+function startTimer() {
+    // Empêcher les multiples intervalles actifs
+    if (timerInterval !== null) {
+        clearInterval(timerInterval);
+    }
+
+    timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+            if ([10, 5, 3, 2, 1].includes(timeLeft)) {
+                document.getElementById("beep").play().catch(e => console.log("Audio bloqué :", e));
+            }
+            timeLeft--;
+            document.getElementById("timer").textContent = timeLeft + "s";
+        } else {
+            clearInterval(timerInterval);
+            timerInterval = null; // Libérer l'intervalle pour éviter les conflits
+            timeLeft = 0; // S'assurer qu'on ne descend pas en dessous de 0
+            document.getElementById("timer").textContent = "0s";
+            document.getElementById("endSound").play();
+            endGame("PERDU !");
         }
+    }, 1000);
+}
 
 
         function endGame(message) {
