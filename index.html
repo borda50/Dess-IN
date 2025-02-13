@@ -40,7 +40,7 @@
     <audio id="win" src="win.mp3"></audio> 
     <button id="start">▶️ LANCER</button>
     <div id="game" class="hidden">
-        <h2 id="timer">100s</h2>
+        <h2 id="timer">80s</h2>
         <h3 id="counter">0 réussis / 0 tentés</h3>
         <div id="difficulty-choices">
             <button class="difficulty" data-level="simple">😀 Simple</button>
@@ -106,9 +106,9 @@
 
 
         function endGame(message) {
-            document.getElementById("difficulty-choices").classList.add("hidden");
-            document.getElementById("word").classList.add("hidden");
-            document.getElementById("action-buttons").classList.add("hidden");
+            document.getElementById("game").classList.add("hidden");
+            document.getElementById("result").textContent = `${message} (${successCount} réussis / ${attempts} tentés)`;
+            document.getElementById("result").classList.remove("hidden");
             document.getElementById("restart").classList.remove("hidden");
     
             if (message === "GAGNÉ !") {
@@ -131,7 +131,7 @@
            	    availableWords[level] = [...words[level]];
         	}
         	let randomIndex = Math.floor(Math.random() * availableWords[level].length);
-        	let randomWord = availableWords[level].splice(randomIndex, 1)[0]; // Retire le mot
+        	let randomWord = availableWords[level].splice(randomIndex, 1)[0];
         	let timeBonus = level === "simple" ? 30 : level === "moyen" ? 40 : 60;
         	document.getElementById("word").textContent = randomWord;
         	document.getElementById("success").textContent = `✅ RÉUSSI (+${timeBonus}sec)`;
@@ -162,8 +162,6 @@
         
         function checkEndGame() {
             document.getElementById("counter").textContent = `${successCount} réussis / ${attempts} tentés`;
-            document.getElementById("difficulty-choices").classList.add("hidden");
-            
         if (successCount >= 10) {
             clearInterval(timerInterval);
             endGame("GAGNÉ !");
