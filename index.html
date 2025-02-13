@@ -98,17 +98,10 @@
                     }
                 } else {
                     clearInterval(timerInterval);
-                    document.getElementById("win").play(); // Son de défaite
+                    document.getElementById("lose").play(); // Son de défaite
                     endGame("PERDU !");
                 }
             }, 1000);
-        }
-
-        function winGame() {
-            console.log("winGame() appelé !");
-            clearInterval(timerInterval);
-            document.getElementById("lose").play(); // Son de victoire
-            endGame("GAGNÉ !");
         }
 
 
