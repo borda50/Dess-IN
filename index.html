@@ -40,7 +40,7 @@
     <audio id="win" src="win.mp3"></audio> 
     <button id="start">▶️ LANCER</button>
     <div id="game" class="hidden">
-        <h2 id="timer">150s</h2>
+        <h2 id="timer">100s</h2>
         <h3 id="counter">0 réussis / 0 tentés</h3>
         <div id="difficulty-choices">
             <button class="difficulty" data-level="simple">😀 Simple</button>
@@ -106,17 +106,11 @@
 
 
         function endGame(message) {
-            // Hide game elements except timer
             document.getElementById("difficulty-choices").classList.add("hidden");
             document.getElementById("word").classList.add("hidden");
             document.getElementById("action-buttons").classList.add("hidden");
-    
-            // Show result and restart button
-            document.getElementById("result").textContent = `${message} (${successCount} réussis / ${attempts} tentés)`;
-            document.getElementById("result").classList.remove("hidden");
             document.getElementById("restart").classList.remove("hidden");
     
-            // Play the appropriate sound based on the result
             if (message === "GAGNÉ !") {
                 document.getElementById("win").play().catch(e => console.log("Erreur audio :", e));
             } else {
