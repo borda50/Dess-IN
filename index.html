@@ -40,7 +40,7 @@
     <audio id="win" src="win.mp3"></audio> 
     <button id="start">▶️ LANCER</button>
     <div id="game" class="hidden">
-        <h2 id="timer">100s</h2>
+        <h2 id="timer">80s</h2>
         <h3 id="counter">0 réussis / 0 tentés</h3>
         <div id="difficulty-choices">
             <button class="difficulty" data-level="simple">😀 Simple</button>
@@ -98,7 +98,7 @@
                     }
                 } else {
                     clearInterval(timerInterval);
-                    document.getElementById("lose").play(); // Son de défaite
+                    document.getElementById("win").play(); // Son de défaite
                     endGame("PERDU !");
                 }
             }, 1000);
@@ -107,7 +107,7 @@
         function winGame() {
             console.log("winGame() appelé !");
             clearInterval(timerInterval);
-            document.getElementById("win").play(); // Son de victoire
+            document.getElementById("lose").play(); // Son de victoire
             endGame("GAGNÉ !");
         }
 
