@@ -92,7 +92,7 @@
                     timeLeft--;
                     document.getElementById("timer").textContent = timeLeft + "s";
 
-                    if (timeLeft > 10) {
+                    if (timeLeft < 10) {
                         document.getElementById("beep").play();
                     }
                 } else {
