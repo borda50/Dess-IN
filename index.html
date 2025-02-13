@@ -160,7 +160,11 @@
                 clearInterval(timer);
                 document.getElementById("message").textContent = "GAGNÉ !";
                 document.getElementById("action-buttons").classList.add("hidden");
-            }
+                document.querySelectorAll("#action-buttons button").forEach(button => {
+                    button.disabled = true;
+                });
+
+                return;
             
             if (attempts % 3 === 0) {
                 clearInterval(timer);
