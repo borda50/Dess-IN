@@ -36,10 +36,11 @@
 </head>
 <body>
     <audio id="beep" src="bip.mp3"></audio>
-    <audio id="lose" src="fin.mp3"></audio>
+    <audio id="lose" src="lose.mp3"></audio>
+    <audio id="win" src="win.mp3"></audio>
     <button id="start">▶️ LANCER</button>
     <div id="game" class="hidden">
-        <h2 id="timer">100s</h2>
+        <h2 id="timer">80s</h2>
         <h3 id="counter">0 réussis / 0 tentés</h3>
         <div id="difficulty-choices">
             <button class="difficulty" data-level="simple">😀 Simple</button>
@@ -86,8 +87,8 @@
         let attempts = 0;
 
         function startTimer() {
-            clearInterval(timer);
-            timer = setInterval(() => {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
                 if (timeLeft > 0) {
                     timeLeft--;
                     document.getElementById("timer").textContent = timeLeft + "s";
@@ -96,10 +97,17 @@
                         document.getElementById("beep").play();
                     }
                 } else {
-                    clearInterval(timer);
+                    clearInterval(timerInterval);
+                    document.getElementById("lose").play(); // Son de défaite
                     endGame("PERDU !");
                 }
             }, 1000);
+        }
+
+        function winGame() {
+            clearInterval(timerInterval);
+            document.getElementById("win").play(); // Son de victoire
+            endGame("GAGNÉ !");
         }
 
 
