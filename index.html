@@ -8,7 +8,10 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f4f4f4;
+            background-image: url('wallpaper.jpg');  /* Replace 'wallpaper.jpg' with your image name */
+            background-size: cover;  /* This makes the image cover the whole screen */
+            background-position: center;  /* Centers the image */
+            background-repeat: no-repeat;  /* Prevents the image from repeating */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -40,7 +43,7 @@
     <audio id="win" src="win.mp3"></audio> 
     <button id="start">▶️ LANCER</button>
     <div id="stats" class="hidden">
-          <h2 id="timer">10</h2>
+          <h2 id="timer">100</h2>
         <h3 id="counter">0 réussis / 0 tentés</h3>
     </div>
     <div id="game" class="hidden">
