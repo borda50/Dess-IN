@@ -93,7 +93,7 @@
             timerInterval = setInterval(() => {
                 if (timeLeft > 0) {
                     timeLeft--;
-                    document.getElementById("timer").textContent = timeLeft + "s";
+                    document.getElementById("timer").textContent = timeLeft;
 
                     if (timeLeft < 11) {
                         document.getElementById("beep").play();
