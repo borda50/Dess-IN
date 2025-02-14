@@ -40,7 +40,7 @@
     <audio id="win" src="win.mp3"></audio> 
     <button id="start">▶️ LANCER</button>
     <div id="stats" class="hidden">
-          <h2 id="timer">90</h2>
+          <h2 id="timer">100</h2>
         <h3 id="counter">0 réussis / 0 tentés</h3>
     </div>
     <div id="game" class="hidden">
@@ -117,7 +117,6 @@
         function endGame(message) {
             // Hide game elements but keep stats visible
             document.getElementById("game").classList.add("hidden");
-            document.getElementById("stats").classList.add("hidden");
 
             // Show the result and restart button
             document.getElementById("result").classList.remove("hidden");
