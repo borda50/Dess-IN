@@ -40,7 +40,7 @@
     <audio id="win" src="win.mp3"></audio> 
     <button id="start">▶️ LANCER</button>
     <div id="stats" class="hidden">
-          <h2 id="timer">100s</h2>
+          <h2 id="timer">100</h2>
         <h3 id="counter">0 réussis / 0 tentés</h3>
     </div>
     <div id="game" class="hidden">
@@ -156,14 +156,14 @@
             timeLeft += timeBonus;
             successCount++;
             attempts++;
-            document.getElementById("timer").textContent = timeLeft + "s";
+            document.getElementById("timer").textContent = timeLeft;
             checkEndGame();
         });
         
         document.getElementById("pass").addEventListener("click", function() {
             timeLeft -= 15;
             attempts++;
-            document.getElementById("timer").textContent = timeLeft + "s";
+            document.getElementById("timer").textContent = timeLeft;
             checkEndGame();
         });
         
