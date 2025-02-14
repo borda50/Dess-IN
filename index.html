@@ -39,9 +39,11 @@
     <audio id="lose" src="lose.mp3"></audio>
     <audio id="win" src="win.mp3"></audio> 
     <button id="start">▶️ LANCER</button>
-    <div id="game" class="hidden">
-        <h2 id="timer">80s</h2>
+    <div id="stats" class="hidden">
+          <h2 id="timer">80s</h2>
         <h3 id="counter">0 réussis / 0 tentés</h3>
+    </div>
+    <div id="game" class="hidden">
         <div id="difficulty-choices">
             <button class="difficulty" data-level="simple">😀 Simple</button>
             <button class="difficulty" data-level="moyen">😐 Moyen</button>
@@ -106,10 +108,8 @@
 
 
         function endGame(message) {
-            // Keep the timer visible but hide other game elements
-            document.getElementById("difficulty-choices").classList.add("hidden");
-            document.getElementById("word").classList.add("hidden");
-            document.getElementById("action-buttons").classList.add("hidden");
+            // Hide game elements but keep stats visible
+            document.getElementById("game").classList.add("hidden");
 
             // Show the result and restart button
             document.getElementById("result").textContent = `${message} (${successCount} réussis / ${attempts} tentés)`;
@@ -121,13 +121,14 @@
             if (message === "GAGNÉ !") {
                 document.getElementById("win").play().catch(e => console.log("Erreur audio :", e));
             } else {
-                document.getElementById("lose").play().catch(e => console.log("Erreur audio :", e));
+            document.getElementById("lose").play().catch(e => console.log("Erreur audio :", e));
             }
         }
 
         document.getElementById("start").addEventListener("click", function() {
             document.getElementById("start").classList.add("hidden");
             document.getElementById("game").classList.remove("hidden");
+            document.getElementById("stats").classList.remove("hidden");
             startTimer();
         });
         
